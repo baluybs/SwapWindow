@@ -1,5 +1,4 @@
 package com.baluybs.shop;
-
 import java.util.Scanner;
 
 public class Test {

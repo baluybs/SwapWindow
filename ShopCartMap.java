@@ -29,9 +29,9 @@ class ProductMap{
 	}
 }
 public class ShopCartMap {
-	Map<Integer, ProductMap> m=new HashMap<>();
-	private ProductMap p=null;
-	static double totalPrice=0.0;
+	static Map<Integer, ProductMap> m=new HashMap<>();
+	ProductMap p=null;
+	double totalPrice=0.0;
 	public void showItems() {
 		System.out.println("Pid    Products    Price(rs)");
 		System.out.println("1      kurkure     10");
@@ -80,15 +80,16 @@ public class ShopCartMap {
 		}else {
 			System.err.println("Please enter ProductId in the given list");
 		}
+		System.out.println(p.getItemName()+" Added successfully to your Cart");
 	}
 	public void removeItem(int pid) {
 		m.remove(pid);
 	}
 	public void displayCart() {
 		System.out.println("Name\tPrice\tqnty");
+		System.out.println("..................");
 		Set key=m.keySet();
 		Iterator itr=key.iterator();
-		System.out.println("..................");
 		while(itr.hasNext()) {
 			Object k= itr.next();
 			System.out.print(m.get(k).getItemName()+"\t"+m.get(k).getItemPrice()+"\t"+m.get(k).getQuantity()+"\n");
@@ -98,10 +99,4 @@ public class ShopCartMap {
 		System.out.println();
 		System.out.println(totalPrice);
 	}
-//	public static void main(String[] args) {
-//		ShopCartMap c=new ShopCartMap();
-//		c.addProduct(1, 2);
-//		c.addProduct(2, 2);
-//		c.displayCart();
-//	}
 }
