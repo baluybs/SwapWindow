@@ -29,74 +29,75 @@ class ProductMap{
 	}
 }
 public class ShopCartMap {
+	//creating a map to store products 
 	static Map<Integer, ProductMap> m=new HashMap<>();
+	//creating product type object to store data members and pass it to map
 	ProductMap p=null;
 	double totalPrice=0.0;
+	//display the items available
 	public void showItems() {
-		System.out.println("Pid    Products    Price(rs)");
-		System.out.println("1      kurkure     10");
-		System.out.println("2      Lays        20");
-		System.out.println("3      Oreo        40");
+		System.out.println("Pid\tProducts\tPrice(rs)");
+		System.out.println("1\tkurkure\t10");
+		System.out.println("2\tLays\t20");
+		System.out.println("3\tOreo\t40");
 	}
-	public void addProduct(int pid,int qnty) {
-		if (pid==1) {
-			if (m.containsKey(pid)) {
-				ProductMap k=(ProductMap)m.get(pid);
-				k.setQuantity(qnty+(int)k.getQuantity());
-				m.put(pid, k);
-			}else {
-			p=new ProductMap();
-			p.setItemName("kurkure");
-			p.setItemPrice(10);
-			p.setQuantity(qnty);
-			m.put(1, p);
-			}
-		}
-		else if (pid==2) {
-			if (m.containsKey(pid)) {
-				ProductMap k=(ProductMap)m.get(pid);
-				k.setQuantity(qnty+(int)k.getQuantity());
-				m.put(pid, k);
-			}else {
-			p=new ProductMap();
-			p.setItemName("Lays");
-			p.setItemPrice(20);
-			p.setQuantity(qnty);
-			m.put(2, p);
-			}
-		}
-		else if (pid==3) {
-			if (m.containsKey(pid)) {
-				ProductMap k=(ProductMap)m.get(pid);
-				k.setQuantity(qnty+(int)k.getQuantity());
-				m.put(pid, k);
-			}else {
-			p=new ProductMap();
-			p.setItemName("Oreo");
-			p.setItemPrice(40);
-			p.setQuantity(qnty);
-			m.put(3, p);
-			}
+	//this method called when we want to add or update products
+	public void addItems(int productId,int quantity,String itemName,int itemPrice) {
+		if (m.containsKey(productId)) {
+			ProductMap k=(ProductMap)m.get(productId);
+			k.setQuantity(quantity+(int)k.getQuantity());
+			m.put(productId, k);
 		}else {
-			System.err.println("Please enter ProductId in the given list");
+		p=new ProductMap();
+		p.setItemName(itemName);
+		p.setItemPrice(itemPrice);
+		p.setQuantity(quantity);
+		m.put(productId, p);
 		}
 		System.out.println(p.getItemName()+" Added successfully to your Cart");
 	}
-	public void removeItem(int pid) {
-		m.remove(pid);
+	//user can add items through this method
+	public void addProduct(int productId,int productQuantity) {
+		if (productId==1) {
+			addItems(productId, productQuantity,"kurkure",10);
+			}
+		else if (productId==2) {
+			addItems(productId, productQuantity,"Lays",20);
+		}
+		else if (productId==3) {
+			addItems(productId, productQuantity,"Oreo",40);
+		}else {
+			System.err.println("Please enter ProductId in the given list");
+		}
 	}
+	//to remove item from the cart
+	public void removeItem(int productId) {
+		if(m.isEmpty())
+			System.err.println("Your cart is empty please add products to your cart");
+		else if(m.containsKey(productId))
+			m.remove(productId);
+		else
+			System.err.println("Please enter the Product present in your Cart");
+	}
+	//to display the updated cart details
 	public void displayCart() {
 		System.out.println("Name\tPrice\tqnty");
-		System.out.println("..................");
+		System.out.println(".....................");
 		Set key=m.keySet();
 		Iterator itr=key.iterator();
 		while(itr.hasNext()) {
 			Object k= itr.next();
 			System.out.print(m.get(k).getItemName()+"\t"+m.get(k).getItemPrice()+"\t"+m.get(k).getQuantity()+"\n");
 			totalPrice+=(int)m.get(k).getItemPrice()*(int)m.get(k).getQuantity();
-			System.out.println("..................");
+			System.out.println(".....................");
 		}
 		System.out.println();
-		System.out.println(totalPrice);
+		System.out.println("Total Price="+totalPrice);
+	}
+	public boolean isEmpty() {
+		if(m.isEmpty())
+			return true;
+		else
+			return false;
 	}
 }

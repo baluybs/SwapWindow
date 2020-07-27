@@ -22,16 +22,24 @@ public class Test {
 		{
 		case 1: c.showItems();
 				break;
-		case 2: System.out.println("Enter Product Id and quantity");
+		case 2: System.out.println("Enter Product:");
 				int pid=scn.nextInt();
+				System.out.println("Enter Quantity:");
 				int qty=scn.nextInt();
 				c.addProduct(pid, qty);
 				break;
-		case 3: System.out.println("Enter Product Id to remove product");
+		case 3: if(c.isEmpty()) {
+					System.err.println("please add items to your cart");
+				}else {
+				System.out.println("Enter Product Id to remove product:");
 				int id=scn.nextInt();
 				c.removeItem(id);
+				}
 				break;
-		case 4: c.displayCart();
+		case 4: if(c.isEmpty()) {
+					System.err.println("please add items to your cart");
+				}else
+				c.displayCart();
 				break;
 		default :System.err.println("Please enter a valid input");
 		}
