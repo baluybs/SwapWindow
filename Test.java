@@ -11,29 +11,29 @@ public class Test {
 			System.out.println("Press 3 to remove Products");
 			System.out.println("Press 4 to view Cart");
 			System.out.println("enter option");
-			int opt=sc.nextInt();
-			select(opt);
+			int option=sc.nextInt();
+			select(option);
 		}
 	}
-	public static void select(int opt) {
+	public static void select(int option) {
 		ShopCartMap c=new ShopCartMap();
 		Scanner scn=new Scanner(System.in);
-		switch(opt)
+		switch(option)
 		{
 		case 1: c.showItems();
 				break;
 		case 2: System.out.println("Enter Product:");
-				int pid=scn.nextInt();
+				int productId=scn.nextInt();
 				System.out.println("Enter Quantity:");
-				int qty=scn.nextInt();
-				c.addProduct(pid, qty);
+				int quantity=scn.nextInt();
+				c.addProduct(productId, quantity);
 				break;
 		case 3: if(c.isEmpty()) {
 					System.err.println("please add items to your cart");
 				}else {
 				System.out.println("Enter Product Id to remove product:");
-				int id=scn.nextInt();
-				c.removeItem(id);
+				int removeProductId=scn.nextInt();
+				c.removeItem(removeProductId);
 				}
 				break;
 		case 4: if(c.isEmpty()) {

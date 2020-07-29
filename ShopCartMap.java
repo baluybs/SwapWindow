@@ -36,7 +36,7 @@ public class ShopCartMap {
 	double totalPrice=0.0;
 	//display the items available
 	public void showItems() {
-		System.out.println("Pid\tProducts\tPrice(rs)");
+		System.out.println("ProductId\tProductName\tProductPrice(rs)");
 		System.out.println("1\tkurkure\t10");
 		System.out.println("2\tLays\t20");
 		System.out.println("3\tOreo\t40");
@@ -94,6 +94,7 @@ public class ShopCartMap {
 		System.out.println();
 		System.out.println("Total Price="+totalPrice);
 	}
+	//to know weather map is empty or not
 	public boolean isEmpty() {
 		if(m.isEmpty())
 			return true;
