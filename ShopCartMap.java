@@ -1,4 +1,4 @@
-package com.baluybs.shop;
+package com.baluybs;
 import java.util.*;
 //class to store all the details related to product
 class ProductMap{
@@ -100,31 +100,39 @@ public class ShopCartMap {
 		Scanner scn=new Scanner(System.in);
 		if(inputOption==1) {
 			System.out.println("Enter ProductId to update");
-			int addProductId=scn.nextInt();
-			if (productMap.containsKey(addProductId)) {
-				System.out.println("Enter Quantity to update");
-				int addProductQuantity=scn.nextInt();
-				ProductMap k=(ProductMap)productMap.get(addProductId);
-				k.setQuantity(addProductQuantity+(int)k.getQuantity());
-				productMap.put(addProductId, k);
-			}else {
-				System.err.println("Please enter the Id present in your cart");
+			try {
+				int addProductId=scn.nextInt();
+				if (productMap.containsKey(addProductId)) {
+					System.out.println("Enter Quantity to update");
+					int addProductQuantity=scn.nextInt();
+					ProductMap k=(ProductMap)productMap.get(addProductId);
+					k.setQuantity(addProductQuantity+(int)k.getQuantity());
+					productMap.put(addProductId, k);
+				}else {
+					System.err.println("Please enter the Id present in your cart");
+				}
+			}catch(InputMismatchException e){
+				System.err.println("Please enter valid option");
+				return;
 			}
-			return;
 		}
 		else if(inputOption==2) {
 			System.out.println("Enter ProductId to remove");
-			int removeProductId=scn.nextInt();
-			if (productMap.containsKey(removeProductId)) {
-				System.out.println("Enter No.of Quantity to remove");
-				int removeProductQuantity=scn.nextInt();
-				ProductMap k=(ProductMap)productMap.get(removeProductId);
-				k.setQuantity((int)k.getQuantity()-removeProductQuantity);
-				productMap.put(removeProductId, k);
-			}else {
-				System.err.println("Please enter existing Id in your cart");
+			try {
+				int removeProductId=scn.nextInt();
+				if (productMap.containsKey(removeProductId)) {
+					System.out.println("Enter No.of Quantity to remove");
+					int removeProductQuantity=scn.nextInt();
+					ProductMap k=(ProductMap)productMap.get(removeProductId);
+					k.setQuantity((int)k.getQuantity()-removeProductQuantity);
+					productMap.put(removeProductId, k);
+				}else {
+					System.err.println("Please enter existing Id in your cart");
+				}
+			}catch(InputMismatchException e){
+				System.err.println("Please enter valid option");
+				return;
 			}
-			return;
 		}
 		else {
 			System.err.println("Sorry Invalid option");
