@@ -1,6 +1,6 @@
 package com.baluybs.shop;
 import java.util.*;
-
+//class to store all the details related to product
 class ProductMap{
 	private String itemName;
 	private int itemPrice;
@@ -30,31 +30,30 @@ class ProductMap{
 }
 public class ShopCartMap {
 	//creating a map to store products 
-	static Map<Integer, ProductMap> m=new HashMap<>();
+	static Map<Integer, ProductMap> productMap=new HashMap<>();
 	//creating product type object to store data members and pass it to map
-	ProductMap p=null;
+	ProductMap productObj=null;
 	double totalPrice=0.0;
 	//display the items available
 	public void showItems() {
 		System.out.println("ProductId\tProductName\tProductPrice(rs)");
-		System.out.println("1\tkurkure\t10");
-		System.out.println("2\tLays\t20");
-		System.out.println("3\tOreo\t40");
+		System.out.println("1\t\tkurkure\t\t10");
+		System.out.println("2\t\tLays\t\t20");
+		System.out.println("3\t\tOreo\t\t40");
 	}
-	//this method called when we want to add or update products
+	//this method called when we want to add products
 	public void addItems(int productId,int quantity,String itemName,int itemPrice) {
-		if (m.containsKey(productId)) {
-			ProductMap k=(ProductMap)m.get(productId);
-			k.setQuantity(quantity+(int)k.getQuantity());
-			m.put(productId, k);
+		if(!productMap.containsKey(productId))
+		{
+			productObj=new ProductMap();
+			productObj.setItemName(itemName);
+			productObj.setItemPrice(itemPrice);
+			productObj.setQuantity(quantity);
+			productMap.put(productId, productObj);
+			System.out.println(productObj.getItemName()+" Added successfully to your Cart");
 		}else {
-		p=new ProductMap();
-		p.setItemName(itemName);
-		p.setItemPrice(itemPrice);
-		p.setQuantity(quantity);
-		m.put(productId, p);
+			System.err.println("Product already added in your list");
 		}
-		System.out.println(p.getItemName()+" Added successfully to your Cart");
 	}
 	//user can add items through this method
 	public void addProduct(int productId,int productQuantity) {
@@ -72,31 +71,68 @@ public class ShopCartMap {
 	}
 	//to remove item from the cart
 	public void removeItem(int productId) {
-		if(m.isEmpty())
+		if(productMap.isEmpty())
 			System.err.println("Your cart is empty please add products to your cart");
-		else if(m.containsKey(productId))
-			m.remove(productId);
+		else if(productMap.containsKey(productId))
+			productMap.remove(productId);
 		else
 			System.err.println("Please enter the Product present in your Cart");
 	}
 	//to display the updated cart details
+	@SuppressWarnings("rawtypes")
 	public void displayCart() {
 		System.out.println("Name\tPrice\tqnty");
 		System.out.println(".....................");
-		Set key=m.keySet();
+		Set key=productMap.keySet();
 		Iterator itr=key.iterator();
 		while(itr.hasNext()) {
 			Object k= itr.next();
-			System.out.print(m.get(k).getItemName()+"\t"+m.get(k).getItemPrice()+"\t"+m.get(k).getQuantity()+"\n");
-			totalPrice+=(int)m.get(k).getItemPrice()*(int)m.get(k).getQuantity();
+			System.out.print(productMap.get(k).getItemName()+"\t"+productMap.get(k).getItemPrice()+"\t"+productMap.get(k).getQuantity()+"\n");
+			totalPrice+=(int)productMap.get(k).getItemPrice()*(int)productMap.get(k).getQuantity();
 			System.out.println(".....................");
 		}
 		System.out.println();
 		System.out.println("Total Price="+totalPrice);
 	}
+	//method for add or remove quantity from the cart
+	@SuppressWarnings("resource")
+	public void updateProduct(int inputOption) {
+		Scanner scn=new Scanner(System.in);
+		if(inputOption==1) {
+			System.out.println("Enter ProductId to update");
+			int addProductId=scn.nextInt();
+			if (productMap.containsKey(addProductId)) {
+				System.out.println("Enter Quantity to update");
+				int addProductQuantity=scn.nextInt();
+				ProductMap k=(ProductMap)productMap.get(addProductId);
+				k.setQuantity(addProductQuantity+(int)k.getQuantity());
+				productMap.put(addProductId, k);
+			}else {
+				System.err.println("Please enter the Id present in your cart");
+			}
+			return;
+		}
+		else if(inputOption==2) {
+			System.out.println("Enter ProductId to remove");
+			int removeProductId=scn.nextInt();
+			if (productMap.containsKey(removeProductId)) {
+				System.out.println("Enter No.of Quantity to remove");
+				int removeProductQuantity=scn.nextInt();
+				ProductMap k=(ProductMap)productMap.get(removeProductId);
+				k.setQuantity((int)k.getQuantity()-removeProductQuantity);
+				productMap.put(removeProductId, k);
+			}else {
+				System.err.println("Please enter existing Id in your cart");
+			}
+			return;
+		}
+		else {
+			System.err.println("Sorry Invalid option");
+		}
+	}
 	//to know weather map is empty or not
 	public boolean isEmpty() {
-		if(m.isEmpty())
+		if(productMap.isEmpty())
 			return true;
 		else
 			return false;
